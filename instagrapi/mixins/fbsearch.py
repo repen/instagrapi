@@ -5,8 +5,9 @@ from instagrapi.extractors import (
     extract_location,
     extract_track,
     extract_user_short,
+    extract_media_v1
 )
-from instagrapi.types import Hashtag, Location, Track, UserShort
+from instagrapi.types import Hashtag, Location, Track, UserShort, Media
 
 
 class FbSearchMixin:
@@ -99,3 +100,51 @@ class FbSearchMixin:
             if "keyword" in item.keys():
                 data.append((item.get("client_time", None), item["keyword"]))
         return data
+
+    def _extract_media_for_web_top_search(self, result) -> List[Media]:
+        medias = []
+        for item in result["media_grid"]["sections"]:
+            if item["layout_type"] == "media_grid":
+                for container in item["layout_content"]["medias"]:
+                    media = container["media"]
+                    medias.append(extract_media_v1(media))
+            elif item["layout_type"] == "one_by_two_left" or item["layout_type"] == "one_by_two_right":
+                for container in item["layout_content"]["fill_items"]:
+                    media = container["media"]
+                    medias.append(extract_media_v1(media))
+            else:
+                self.logger.warning(f'Unknown layout_type {item["layout_type"]}')
+        return medias
+
+
+    def _fbsearch_web_top_serp(self, query: str, limit):
+        temp = []
+        params = {
+            "query": query,
+            "enable_metadata": True,
+            "search_session_id":self.client_session_id,
+        }
+        result = self.private_request(
+            "fbsearch/web/top_serp/", params=params,
+            domain="www.instagram.com"
+        )
+        temp.extend(self._extract_media_for_web_top_search(result))
+        self.logger.debug(f"extract media {len(temp)}")
+        if len(temp) >= limit:
+            return temp
+
+        params["search_session_id"] = ""
+
+        while len(temp) <= limit:
+            params["rank_token"] = result["media_grid"]["rank_token"]
+            params["next_max_id"] = result["media_grid"]["next_max_id"]
+            result = self.private_request(
+                "fbsearch/web/top_serp/", params=params,
+                domain="www.instagram.com"
+            )
+            temp.extend(self._extract_media_for_web_top_search(result))
+            self.logger.debug(f"extract media {len(temp)}")
+        return temp
+
+    def fbsearch_web_top_serp(self, query: str, limit=100) -> List[Media]:
+        return self._fbsearch_web_top_serp(query, limit=limit)
