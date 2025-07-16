@@ -173,9 +173,9 @@ class SharedMediaImageCandidate(TypesBaseModel):
 
     estimated_scans_sizes: List[int] = []
     height: int
-    scans_profile: str
     url: str
     width: int
+    scans_profile: Optional[str] = None
 
 
 class ScrubberSpritesheetInfo(TypesBaseModel):
