@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Optional
 
 from instagrapi.extractors import (
     extract_hashtag_v1,
@@ -103,6 +103,8 @@ class FbSearchMixin:
 
     def _extract_media_for_web_top_search(self, result) -> List[Media]:
         medias = []
+        if not result.get("media_grid"):
+            return medias
         for item in result["media_grid"]["sections"]:
             if item["layout_type"] == "media_grid":
                 for container in item["layout_content"]["medias"]:
@@ -118,17 +120,17 @@ class FbSearchMixin:
 
 
     def _fbsearch_web_top_serp(self, query: str, limit):
-        temp = []
         params = {
             "query": query,
             "enable_metadata": True,
             "search_session_id":self.client_session_id,
         }
-        result = self.private_request(
-            "fbsearch/web/top_serp/", params=params,
-            domain="www.instagram.com"
-        )
-        temp.extend(self._extract_media_for_web_top_search(result))
+        result = self.private_request("fbsearch/web/top_serp/", params=params, domain="www.instagram.com")
+        temp = []
+        data = self._extract_media_for_web_top_search(result)
+        if not data:
+            return temp
+        temp.extend(data)
         self.logger.debug(f"extract media {len(temp)}")
         if len(temp) >= limit:
             return temp
@@ -142,7 +144,10 @@ class FbSearchMixin:
                 "fbsearch/web/top_serp/", params=params,
                 domain="www.instagram.com"
             )
-            temp.extend(self._extract_media_for_web_top_search(result))
+            data = self._extract_media_for_web_top_search(result)
+            if not data:
+                break
+            temp.extend(data)
             self.logger.debug(f"extract media {len(temp)}")
         return temp
 
