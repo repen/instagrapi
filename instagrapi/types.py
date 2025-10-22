@@ -373,7 +373,7 @@ class ClipsMetadata(TypesBaseModel):
     external_media_info: Optional[dict] = None
     is_fan_club_promo_video: bool = False
     is_shared_to_fb: bool = False
-    mashup_info: ClipsMashupInfo
+    mashup_info: Optional[ClipsMashupInfo] = None
     merchandising_pill_info: Optional[dict] = None
     music_canonical_id: str
     music_info: Optional[dict] = None
@@ -416,7 +416,7 @@ class Media(TypesBaseModel):
     video_duration: Optional[float] = 0.0  # for Video and IGTV
     title: Optional[str] = ""
     resources: List[Resource] = []
-    clips_metadata: Optional[ClipsMetadata] = None
+    clips_metadata: Optional[ClipsMetadata | dict] = None
 
 
 class MediaXma(TypesBaseModel):

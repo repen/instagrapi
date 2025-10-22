@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v5
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -32,8 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v5
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -51,8 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v5
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -73,8 +73,8 @@ jobs:
       TEST_ACCOUNTS_URL: ${{ secrets.TEST_ACCOUNTS_URL }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v5
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -102,9 +102,9 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
@@ -131,9 +131,9 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
