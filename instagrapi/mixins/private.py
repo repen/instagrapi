@@ -338,12 +338,12 @@ class PrivateRequestMixin:
                     if extra_sig:
                         data += "&".join(extra_sig)
                 response = self.private.post(
-                    api_url, data=data, params=params, proxies=self.private.proxies
+                    api_url, data=data, params=params, proxies=self.private.proxies, timeout=60
                 )
             else:  # GET
                 self.private.headers.pop("Content-Type", None)
                 response = self.private.get(
-                    api_url, params=params, proxies=self.private.proxies
+                    api_url, params=params, proxies=self.private.proxies, timeout=60
                 )
             self.logger.debug(
                 "private_request %s: %s (%s)",
