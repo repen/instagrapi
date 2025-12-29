@@ -1,3 +1,11 @@
+  > ### 🐰 Try Bunny CDN
+  > Lightning-fast global CDN with storage from **$0.01/GB**
+  >
+  > 🥕 No egress fees  🥕 14-day free trial  🥕 Crypto payments
+  >
+  > [**Start Free Trial →**](https://bunny.net?ref=73f3vd6eq3)
+
+
 If you want to work with Instagrapi (business interests), we strongly advise you to prefer [HikerAPI SaaS](https://hikerapi.com/p/bkXQlaVe) project.
 However, you won't need to spend weeks or even months setting it up.
 The best service available today is [HikerAPI SaaS](https://hikerapi.com/p/bkXQlaVe), which handles 4–5 million daily requests, provides support around-the-clock, and offers partners a special rate.
@@ -10,16 +18,15 @@ The instagrapi more suits for testing or research than a working business!
 
 ### We recommend using our services:
 
-* [LamaTok](https://lamatok.com/p/B9ScEYIQ) for TikTok API 🔥
+* [Cloqly](https://cloqly.com/register?ref=58dbf70f) for Rotating Proxies 🔒
 * [HikerAPI](https://hikerapi.com/p/bkXQlaVe) for Instagram API ⚡⚡⚡
-* [DataLikers](https://datalikers.com/p/S9Lv5vBy) for Instagram Datasets 🚀
+* [DataLikers](https://datalikers.com/p/S9Lv5vBy) for Instagram Datasets, MCP and CacheAPI 🚀
+* [LamaTok](https://lamatok.com/p/B9ScEYIQ) for TikTok API 🔥
 
 [![Package](https://github.com/subzeroid/instagrapi/actions/workflows/python-package.yml/badge.svg?branch=master&1)](https://github.com/subzeroid/instagrapi/actions/workflows/python-package.yml)
 [![PyPI](https://img.shields.io/pypi/v/instagrapi)](https://pypi.org/project/instagrapi/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instagrapi)
 ![Checked with mypy](https://img.shields.io/badge/mypy-checked-blue)
-
-> To run instagrapi you may need a [cheap and powerful server](https://powervps.net/?from=96837), I recommend using my promo you will support the author of this library!
 
 Features:
 
@@ -28,7 +35,7 @@ Features:
 * Getting public data of post, story, album, Reels, IGTV data and the ability to download content
 * Getting public data of hashtag and location data, as well as a list of posts for them
 * Getting public data of all comments on a post and a list of users who liked it
-* Management of proxy, mobile devices and challenge resolver
+* Management of [proxy](https://cloqly.com/register?ref=58dbf70f), mobile devices and challenge resolver
 * Login by username and password, sessionid and support 2FA
 * Managing messages and threads for Direct and attach files
 * Download and upload a Photo, Video, IGTV, Reels, Albums and Stories
