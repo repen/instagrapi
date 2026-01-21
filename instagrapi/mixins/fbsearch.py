@@ -153,3 +153,25 @@ class FbSearchMixin:
 
     def fbsearch_web_top_serp(self, query: str, limit=100) -> List[Media]:
         return self._fbsearch_web_top_serp(query, limit=limit)
+
+    def _about_this_account_country(self, target_user_id: str):
+        data = {
+            "referer_type": "ProfileMore",
+            "target_user_id": target_user_id,
+        }
+        
+        headers = {
+            "x-bloks-version-id": "9fc6a7a4a577456e492c189810755fe22a6300efc23e4532268bca150fe3e27a"
+        }
+
+        result = self.private_request(
+            "bloks/apps/com.bloks.www.ig.about_this_account/",
+            data=data,
+            domain="i.instagram.com",
+            headers=headers,
+            with_signature=False
+        )
+        return result
+
+    def about_this_account_country(self, target_user_id):
+        return self._about_this_account_country(target_user_id)
