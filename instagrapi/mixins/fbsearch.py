@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple, Union, Optional
+from typing import Dict, List, Tuple, Union, Optional, Callable
 
 from instagrapi.extractors import (
     extract_hashtag_v1,
@@ -118,6 +118,44 @@ class FbSearchMixin:
                 self.logger.warning(f'Unknown layout_type {item["layout_type"]}')
         return medias
 
+    def _fbsearch_web_top_serp2(self, query: str, callback: Callable):
+        params = {
+            "query": query,
+            "enable_metadata": True,
+            "search_session_id": self.client_session_id,
+        }
+
+        while True:
+            response = self.private_request(
+                "fbsearch/web/top_serp/",
+                params=params,
+                domain="www.instagram.com"
+            )
+
+            data = self._extract_media_for_web_top_search(response)
+            self.logger.debug(f"Extracted media: {len(data)}")
+
+            if not data:
+                break
+
+            if callback(data) is False:
+                break
+
+            media_grid = response.get("media_grid", {})
+            next_max_id = media_grid.get("next_max_id")
+
+            if not next_max_id:
+                break
+
+            params.update({
+                "search_session_id": "",
+                "rank_token": media_grid.get("rank_token"),
+                "next_max_id": next_max_id
+            })
+
+
+    def fbsearch_web_top_serp2(self, query: str, callback: Callable):
+        return self._fbsearch_web_top_serp2(query, callback)
 
     def _fbsearch_web_top_serp(self, query: str, limit):
         params = {
